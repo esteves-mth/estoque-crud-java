@@ -75,4 +75,21 @@ public class EstoqueDAO {
       throw new RuntimeException(e);
     }
   }
+
+  public boolean atualizar(Produto produto) throws SQLException {
+    try {
+      Connection conn = cf.getConnection();
+      PreparedStatement pstmt =
+          conn.prepareStatement(
+              "update produtos set nome = ?, preco = ?, quantidade = ? where id = ?");
+      pstmt.setString(1, produto.getNome());
+      pstmt.setDouble(2, produto.getPreco());
+      pstmt.setInt(3, produto.getQuantidade());
+      pstmt.setInt(4, produto.getId());
+      int rows = pstmt.executeUpdate();
+      return rows > 0;
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }
