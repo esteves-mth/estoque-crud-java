@@ -19,16 +19,25 @@ public class App {
       System.out.println("Error: " + e.getMessage());
     }
 
-    Produto pendrive = new Produto(0, "PenDrive 32GB", 39.90, 20);
+    Produto pendrive = new Produto(6, "PenDrive 32GB", 39.90, 20);
+    //    try {
+    //      dao.inserir(pendrive);
+    //      System.out.println("New ID=" + pendrive.getId());
+    //    } catch (SQLException e) {
+    //      throw new RuntimeException(e);
+    //    }
+    //    try {
+    //      Produto p1 = dao.buscarPorID(pendrive.getId());
+    //      System.out.printf("ID %d: %s", pendrive.getId(), pendrive);
+    //    } catch (SQLException e) {
+    //      throw new RuntimeException(e);
+    //    }
+
     try {
-      dao.inserir(pendrive);
-      System.out.println("New ID=" + pendrive.getId());
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-    try {
-      Produto p1 = dao.buscarPorID(pendrive.getId());
-      System.out.printf("ID %d: %s", pendrive.getId(), pendrive);
+      pendrive.setPreco(29.90);
+      boolean sucesso = dao.atualizar(pendrive);
+      System.out.println("✅ Update: " + sucesso);
+      System.out.println("Novo: " + dao.buscarPorID(6));
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
