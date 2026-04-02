@@ -92,4 +92,12 @@ public class EstoqueDAO {
       throw new RuntimeException(e);
     }
   }
+
+  public boolean deletar(int id) throws SQLException {
+    Connection conn = cf.getConnection();
+    PreparedStatement pstmt = conn.prepareStatement("delete from produtos where id = ?");
+    pstmt.setInt(1, id);
+    int rows = pstmt.executeUpdate();
+    return rows > 0;
+  }
 }
