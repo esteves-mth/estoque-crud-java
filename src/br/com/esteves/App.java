@@ -7,10 +7,8 @@ import java.sql.*;
 import java.util.List;
 
 public class App {
-  static void main() {
-    System.out.println("Sistema Estoque API");
-    Produto p = new Produto(1, "Computador", 3000, 1);
-    System.out.println(p);
+  public static void main(String[] args) {
+    System.out.println("=== Sistema Estoque ===\n");
     ConnectionFactory cf = new ConnectionFactory();
     EstoqueDAO dao = new EstoqueDAO(cf);
     try (Connection conn = cf.getConnection()) {
@@ -19,41 +17,26 @@ public class App {
       System.out.println("Error: " + e.getMessage());
     }
 
+    Produto p = new Produto(0, "Calculadora", 10, 1);
+    try {
+      dao.inserir(p);
+      System.out.println("ID do Produto " + p.getNome() + ": " + p.getId());
+    } catch (SQLException e) {
+      System.err.println("Erro ao inserir produto: " + e.getMessage());
+    }
+
     try {
       List<Produto> produtos = dao.listarTodos();
       produtos.forEach(System.out::println);
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      System.err.println("Erro ao listar produtos: " + e.getMessage());
     }
-
-    //    Produto pendrive = new Produto(6, "PenDrive 32GB", 39.90, 20);
-    //    try {
-    //      dao.inserir(pendrive);
-    //      System.out.println("New ID=" + pendrive.getId());
-    //    } catch (SQLException e) {
-    //      throw new RuntimeException(e);
-    //    }
-    //    try {
-    //      Produto p1 = dao.buscarPorID(pendrive.getId());
-    //      System.out.printf("ID %d: %s", pendrive.getId(), pendrive);
-    //    } catch (SQLException e) {
-    //      throw new RuntimeException(e);
-    //    }
-
-    //    try {
-    //      pendrive.setPreco(29.90);
-    //      boolean sucesso = dao.atualizar(pendrive);
-    //      System.out.println("✅ Update: " + sucesso);
-    //      System.out.println("Novo: " + dao.buscarPorID(6));
-    //    } catch (SQLException e) {
-    //      throw new RuntimeException(e);
-    //    }
 
     try {
-      boolean deletado = dao.deletar(7);
-      System.out.println("Deletado ID 7: " + deletado);
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
+     boolean deletado = dao.deletar(7);
+     System.out.println("Deletado ID 7: " + deletado);
+   } catch (SQLException e) {
+     System.err.println("Erro ao deletar produto: " + e.getMessage());
+   }
   }
 }
