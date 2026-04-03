@@ -9,11 +9,7 @@ public class ConnectionFactory {
   private final String user = "root";
   private final String pass = "";
 
-  public Connection getConnection() {
-    try {
-      return DriverManager.getConnection(url, user, pass);
-    } catch (SQLException e) {
-      throw new RuntimeException("Error: " + e.getMessage());
-    }
+  public Connection getConnection() throws SQLException {
+    return DriverManager.getConnection(url, user, pass);
   }
 }
